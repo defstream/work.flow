@@ -6,16 +6,30 @@
   "directories": {
     "test": "test"
   },
+  "author": "Hector Gray <hgray@incred.co> (https://github.com/defstream)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/defstream/work.flow/issues"
+  },
+  "homepage": "https://github.com/defstream/work.flow",
+  "devDependencies": {
+    "chai": "3.4.1",
+    "codecov": "1.0.1",
+    "istanbul": "0.4.1",
+    "mocha": "2.3.4",
+    "neo-async": "1.7.1",
+    "plato": "1.5.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "github.com/defstream/work.flow"
+  },
   "scripts": {
     "doc": "jsdoc -R ./README.md -r -d ./doc/api ./lib ./index.js",
     "test": "istanbul cover --dir ./doc/coverage _mocha -- --recursive && cat ./doc/coverage/lcov.info | ./node_modules/codecov/bin/codecov",
     "analyze": "plato -d ./doc/analysis -r ./lib ./index.js",
     "build": "npm run clean && npm run doc && npm run analyze && npm run test",
     "clean": "rm -rf ./doc"
-  },
-  "repository": {
-    "type": "git",
-    "url": "github.com/defstream/work.flow"
   },
   "keywords": [
     "workflow",
@@ -32,20 +46,6 @@
     "wait",
     "await"
   ],
-  "author": "Hector Gray <hgray@incred.co> (https://github.com/defstream)",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/defstream/work.flow/issues"
-  },
-  "homepage": "https://github.com/defstream/work.flow",
-  "devDependencies": {
-    "chai": "3.4.1",
-    "codecov": "1.0.1",
-    "istanbul": "0.4.1",
-    "mocha": "2.3.4",
-    "neo-async": "1.7.1",
-    "plato": "1.5.0"
-  },
   "dependencies": {
     "neo-async": "1.7.1"
   }
