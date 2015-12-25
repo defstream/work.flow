@@ -1,0 +1,249 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Work.flow by defstream</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/github-light.css">
+    <meta name="viewport" content="width=device-width">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Work.flow</h1>
+        <p>Asynchronous Workflow Library for Node</p>
+
+        <p class="view"><a href="https://github.com/defstream/work.flow">View the Project on GitHub <small>defstream/work.flow</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/defstream/work.flow/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/defstream/work.flow/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/defstream/work.flow">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h2>
+<a id="workflow---the-asynchronous-workflow-library-for-node" class="anchor" href="#workflow---the-asynchronous-workflow-library-for-node" aria-hidden="true"><span class="octicon octicon-link"></span></a>work.flow - The asynchronous workflow library for Node</h2>
+
+<p align="center">
+  <a href="https://gemnasium.com/defstream/work.flow"><img src="https://img.shields.io/gemnasium/defstream/work.flow.svg" alt="Gemnasium"></a>
+
+  <a href="https://travis-ci.org/defstream/work.flow"><img src="https://img.shields.io/travis/defstream/work.flow.svg" alt="build status"></a>
+
+  <a href="https://codecov.io/github/defstream/work.flow"><img src="https://img.shields.io/codecov/c/github/defstream/work.flow.svg" alt="coverage"></a>
+
+  <a href="https://circleci.com/gh/defstream/work.flow"><img src="https://img.shields.io/circleci/project/defstream/work.flow.svg" alt="coverage"></a>
+
+   <a href="http://npmjs.com/package/work.flow"><img src="https://img.shields.io/npm/v/work.flow.svg" alt="npm version"></a>
+</p>
+
+<p align="center">
+  <a href="https://gitter.im/defstream/work.flow"><img src="https://img.shields.io/gitter/room/defstream/work.flow.svg" alt="Chat"></a>
+</p>
+
+<p><strong>work.flow</strong> is an asynchronous workflow library for Node.</p>
+
+<p>The current version is 0.0.0 and is still going through documentation and testing before development starts, <strong>Unless you are contributing, you should probably not be using this.</strong></p>
+
+<p>The purpose of work.flow is to provide a means of creating individual pieces of code that can be used to quickly create applications or data processing pipelines.</p>
+
+<h3>
+<a id="tldr" class="anchor" href="#tldr" aria-hidden="true"><span class="octicon octicon-link"></span></a>TLDR;</h3>
+
+<p><strong>print-line.js</strong></p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-k">var</span> work <span class="pl-k">=</span> <span class="pl-c1">require</span>(<span class="pl-s"><span class="pl-pds">'</span>work.flow<span class="pl-pds">'</span></span>);
+
+<span class="pl-smi">module</span>.<span class="pl-smi">exports</span> <span class="pl-k">=</span> <span class="pl-smi">work</span>.<span class="pl-smi">flow</span>.<span class="pl-smi">task</span>.<span class="pl-en">definition</span>({
+    uri<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>incredi.co/games/worlds-fastest-game/print-line<span class="pl-pds">'</span></span>,
+    properties<span class="pl-k">:</span> {
+        message<span class="pl-k">:</span> {
+            type<span class="pl-k">:</span> <span class="pl-c1">String</span>,
+            value<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span><span class="pl-pds">'</span></span>
+        }
+    },
+    <span class="pl-en">task</span><span class="pl-k">:</span> <span class="pl-k">function</span>(<span class="pl-smi">options</span>, <span class="pl-smi">complete</span>) {
+        <span class="pl-k">var</span> message <span class="pl-k">=</span> <span class="pl-smi">options</span>.<span class="pl-smi">properties</span>.<span class="pl-smi">message</span>;
+        <span class="pl-en">console</span>.<span class="pl-c1">log</span>(message);
+        <span class="pl-k">return</span> <span class="pl-en">complete</span>(<span class="pl-c1">null</span>, message);
+    }
+});
+</pre></div>
+
+<p><strong>ask-name.js</strong></p>
+
+<div class="highlight highlight-source-js"><pre>
+<span class="pl-k">var</span> util <span class="pl-k">=</span> <span class="pl-c1">require</span>(<span class="pl-s"><span class="pl-pds">'</span>util<span class="pl-pds">'</span></span>);
+<span class="pl-k">var</span> work <span class="pl-k">=</span> <span class="pl-c1">require</span>(<span class="pl-s"><span class="pl-pds">'</span>work.flow<span class="pl-pds">'</span></span>);
+<span class="pl-k">var</span> readline <span class="pl-k">=</span> <span class="pl-c1">require</span>(<span class="pl-s"><span class="pl-pds">'</span>readline<span class="pl-pds">'</span></span>);
+
+<span class="pl-k">var</span> io <span class="pl-k">=</span> <span class="pl-smi">readline</span>.<span class="pl-en">createInterface</span>({
+    input<span class="pl-k">:</span> <span class="pl-smi">process</span>.<span class="pl-smi">stdin</span>,
+    output<span class="pl-k">:</span> <span class="pl-smi">process</span>.<span class="pl-smi">stdout</span>
+});
+
+<span class="pl-smi">module</span>.<span class="pl-smi">exports</span> <span class="pl-k">=</span> <span class="pl-smi">work</span>.<span class="pl-smi">flow</span>.<span class="pl-smi">task</span>.<span class="pl-en">definition</span>({
+    uri<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>incredi.co/games/worlds-fastest-game/ask-name<span class="pl-pds">'</span></span>,
+    properties<span class="pl-k">:</span> {
+        for<span class="pl-k">:</span> {
+            type<span class="pl-k">:</span> <span class="pl-c1">String</span>,
+            value<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>Buddy<span class="pl-pds">'</span></span>
+        },
+        prompt<span class="pl-k">:</span> {
+            type<span class="pl-k">:</span> <span class="pl-c1">String</span>,
+            value<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>Hey %s, What is your name?<span class="pl-pds">'</span></span>,
+            readOnly<span class="pl-k">:</span> <span class="pl-c1">true</span>
+        }
+    },
+    <span class="pl-en">task</span><span class="pl-k">:</span> <span class="pl-k">function</span>(<span class="pl-smi">options</span>, <span class="pl-smi">complete</span>) {
+        <span class="pl-k">var</span> prompt <span class="pl-k">=</span> <span class="pl-smi">util</span>.<span class="pl-en">format</span>(<span class="pl-smi">options</span>.<span class="pl-smi">properties</span>.<span class="pl-c1">prompt</span>, <span class="pl-smi">options</span>.<span class="pl-smi">properties</span>.<span class="pl-smi">for</span>);
+        <span class="pl-k">return</span> <span class="pl-smi">io</span>.<span class="pl-en">question</span>(prompt, <span class="pl-k">function</span>(<span class="pl-smi">name</span>) {
+            <span class="pl-k">return</span> <span class="pl-en">complete</span>(<span class="pl-c1">null</span>, name);
+        });
+    }
+});
+</pre></div>
+
+<p><strong>ask-for-player-names.js</strong></p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-k">var</span> work <span class="pl-k">=</span> <span class="pl-c1">require</span>(<span class="pl-s"><span class="pl-pds">'</span>work.flow<span class="pl-pds">'</span></span>);
+
+<span class="pl-c1">require</span>(<span class="pl-s"><span class="pl-pds">'</span>./ask-name<span class="pl-pds">'</span></span>);
+
+<span class="pl-smi">module</span>.<span class="pl-smi">exports</span> <span class="pl-k">=</span> <span class="pl-smi">work</span>.<span class="pl-smi">flow</span>.<span class="pl-smi">path</span>.<span class="pl-en">definition</span>({
+    uri<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>incredi.co/games/worlds-fastest-game/paths/ask-for-player-names<span class="pl-pds">'</span></span>,
+    start<span class="pl-k">:</span> [{
+        name<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>player-one<span class="pl-pds">'</span></span>,
+        uri<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>incredi.co/games/worlds-fastest-game/ask-name<span class="pl-pds">'</span></span>,
+        properties<span class="pl-k">:</span> {
+            for<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>Player 1<span class="pl-pds">'</span></span>
+        }
+    }, {
+        name<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>player-two<span class="pl-pds">'</span></span>,
+        uri<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>incredi.co/games/worlds-fastest-game/ask-name<span class="pl-pds">'</span></span>,
+        properties<span class="pl-k">:</span> {
+            for<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>Player 2<span class="pl-pds">'</span></span>
+        }
+    }],
+    timeout<span class="pl-k">:</span> <span class="pl-c1">6000</span>,
+    error<span class="pl-k">:</span> [{
+        uri<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>work.flow/task/restart<span class="pl-pds">'</span></span>
+    }]
+});
+</pre></div>
+
+<p><strong>workflow.js</strong></p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-k">var</span> work <span class="pl-k">=</span> <span class="pl-c1">require</span>(<span class="pl-s"><span class="pl-pds">'</span>work.flow<span class="pl-pds">'</span></span>);
+
+<span class="pl-c1">require</span>(<span class="pl-s"><span class="pl-pds">'</span>./print-line<span class="pl-pds">'</span></span>);
+<span class="pl-c1">require</span>(<span class="pl-s"><span class="pl-pds">'</span>./ask-for-player-names<span class="pl-pds">'</span></span>);
+
+<span class="pl-smi">module</span>.<span class="pl-smi">exports</span> <span class="pl-k">=</span> <span class="pl-smi">work</span>.<span class="pl-smi">flow</span>.<span class="pl-en">definition</span>({
+    name<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>worlds-fastest-game<span class="pl-pds">'</span></span>,
+    uri<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>incredi.co/games/worlds-fastest-game<span class="pl-pds">'</span></span>,
+    start<span class="pl-k">:</span> [{
+        name<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>ask-names<span class="pl-pds">'</span></span>,
+        uri<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>incredi.co/games/worlds-fastest-game/paths/ask-for-player-names<span class="pl-pds">'</span></span>
+    }, {
+        name<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>determine-winner<span class="pl-pds">'</span></span>,
+        uri<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>work.flow/task/if-then-else<span class="pl-pds">'</span></span>,
+        properties<span class="pl-k">:</span> {
+            if<span class="pl-k">:</span> {
+                <span class="pl-en">value</span><span class="pl-k">:</span> <span class="pl-k">function</span>(<span class="pl-smi">options</span>, <span class="pl-smi">callback</span>) {
+          <span class="pl-c">//@info return a random number between 1 &amp; 2.</span>
+                    <span class="pl-k">return</span> <span class="pl-en">callback</span>(<span class="pl-c1">null</span>, <span class="pl-smi">Math</span>.<span class="pl-c1">round</span>(<span class="pl-smi">Math</span>.<span class="pl-c1">random</span>() <span class="pl-k">*</span> (<span class="pl-c1">2</span> <span class="pl-k">-</span> <span class="pl-c1">1</span>) <span class="pl-k">+</span> <span class="pl-c1">1</span>));
+                },
+                equals<span class="pl-k">:</span> <span class="pl-c1">1</span>,
+                then<span class="pl-k">:</span> [{
+                    name<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>player-one-wins<span class="pl-pds">'</span></span>,
+                    uri<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>incredi.co/games/worlds-fastest-game/print-line<span class="pl-pds">'</span></span>,
+                    properties<span class="pl-k">:</span> {
+                        message<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>{ask-names.player-one} WINS!!!!<span class="pl-pds">'</span></span>
+                    }
+                }],
+                else<span class="pl-k">:</span> [{
+                    name<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>player-two-wins<span class="pl-pds">'</span></span>,
+                    uri<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>incredi.co/games/worlds-fastest-game/print-line<span class="pl-pds">'</span></span>,
+                    properties<span class="pl-k">:</span> {
+                        message<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>{ask-names.player-two} WINS!!!!<span class="pl-pds">'</span></span>
+                    }
+                }]
+            }
+        }
+    }, {
+        uri<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>work.flow/workflow/restart<span class="pl-pds">'</span></span>
+    }],
+    timeout<span class="pl-k">:</span> <span class="pl-c1">6000</span>,
+    error<span class="pl-k">:</span> [{
+        uri<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>work.flow/workflow/restart<span class="pl-pds">'</span></span>
+    }]
+});
+</pre></div>
+
+<p><strong>index.js</strong></p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-k">var</span> workflow <span class="pl-k">=</span> <span class="pl-c1">require</span>(<span class="pl-s"><span class="pl-pds">'</span>./workflow<span class="pl-pds">'</span></span>);
+
+<span class="pl-c">//@info lets run the worlds fastest game</span>
+<span class="pl-smi">workflow</span>.<span class="pl-en">run</span>(<span class="pl-k">function</span>(<span class="pl-smi">err</span>, <span class="pl-smi">context</span>){
+  <span class="pl-c">//@info The worlds fastest game is also the longest</span>
+  <span class="pl-c">//      If you take a close look at the work flow</span>
+  <span class="pl-c">//      It will never actually end...</span>
+  <span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-s"><span class="pl-pds">'</span>MUAHAHAHAHAHAHAHAH<span class="pl-pds">'</span></span>);
+});
+
+</pre></div>
+
+<h1>
+<a id="installation" class="anchor" href="#installation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Installation</h1>
+
+<div class="highlight highlight-source-shell"><pre>$ npm install work.flow --save</pre></div>
+
+<h1>
+<a id="development-scripts" class="anchor" href="#development-scripts" aria-hidden="true"><span class="octicon octicon-link"></span></a>Development Scripts</h1>
+
+<p>Before running any development scripts, be sure to first install the dev modules.</p>
+
+<div class="highlight highlight-source-shell"><pre>$ npm install work.flow --save --dev</pre></div>
+
+<h4>
+<a id="build-documentation" class="anchor" href="#build-documentation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Build Documentation</h4>
+
+<p>Outputs code documentation files to the <code>./doc/api</code> folder.</p>
+
+<div class="highlight highlight-source-shell"><pre>$ npm run doc</pre></div>
+
+<h4>
+<a id="static-analysis" class="anchor" href="#static-analysis" aria-hidden="true"><span class="octicon octicon-link"></span></a>Static Analysis</h4>
+
+<p>Outputs static analysis files to the <code>./doc/analysis</code> folder.</p>
+
+<div class="highlight highlight-source-shell"><pre>$ npm run analyze</pre></div>
+
+<h4>
+<a id="test--coverage" class="anchor" href="#test--coverage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Test + Coverage</h4>
+
+<p>Outputs code coverage files to the <code>./doc/coverage</code> folder.</p>
+
+<div class="highlight highlight-source-shell"><pre>$ npm run <span class="pl-c1">test</span></pre></div>
+
+<p><strong>CURRENT COVERAGE REPORT</strong></p>
+
+<p><img src="https://codecov.io/github/defstream/work.flow/branch.svg?branch=master" alt="codecov.io"></p>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/defstream">defstream</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+    
+  </body>
+</html>
