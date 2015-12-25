@@ -1,6 +1,6 @@
 /** @exports Workflow **/
 var Workflow = {
-
+  flow: require('./lib/work/flow')
 };
 /**
  * creates an instance of a new Workflow.
