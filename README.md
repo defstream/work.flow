@@ -33,6 +33,7 @@ The purpose of work.flow is to provide a means of creating individual pieces of 
 **print-line.js**
 
 ```javascript
+var work = require('work.flow');
 
 module.exports = work.flow.task.definition({
 	uri: 'incredi.co/games/worlds-fastest-game/print-line',
@@ -90,6 +91,7 @@ module.exports = work.flow.task.definition({
 **ask-for-player-names.js**
 
 ```javascript
+var work = require('work.flow');
 
 require('./ask-name');
 
@@ -119,6 +121,7 @@ module.exports = work.flow.path.definition({
 **workflow.js**
 
 ```javascript
+var work = require('work.flow');
 
 require('./print-line');
 require('./ask-for-player-names');
