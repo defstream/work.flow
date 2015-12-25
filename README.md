@@ -28,6 +28,11 @@ The current version is 0.0.0 and is still going through documentation and testin
 
 The purpose of work.flow is to provide a means of creating individual pieces of code that can be used to quickly create applications or data processing pipelines.
 
+**More Information**
+- Flow-based Programming http://www.jpaulmorrison.com/fbp/
+- Flow-based programming https://en.wikipedia.org/wiki/Flow-based_programming
+
+
 ### TLDR;
 
 **print-line.js**
