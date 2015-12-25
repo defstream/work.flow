@@ -172,8 +172,8 @@ module.exports = work.flow.definition({
 **index.js**
 
 ```javascript
-
 var workflow = require('./workflow');
+
 //@info lets run the worlds fastest game
 workflow.run(function(err, context){
   //@info The worlds fastest game is also the longest
