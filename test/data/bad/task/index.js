@@ -3,5 +3,6 @@
 'use strict';
 
 module.exports = {
-
+  definition: require('./definition'),
+  run: require('./run')
 };

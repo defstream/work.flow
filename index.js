@@ -1,3 +1,7 @@
+/*jslint node: true */
+/*global module, require*/
+'use strict';
+
 /** @exports Workflow **/
 var Workflow = {
   flow: require('./lib/work/flow')
