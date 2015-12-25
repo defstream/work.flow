@@ -1,7 +1,7 @@
 {
   "name": "work.flow",
   "version": "0.0.0",
-  "description": "The asynchronous workflow library for Node",
+  "description": "The unreleased asynchronous workflow library for Node",
   "main": "index.js",
   "directories": {
     "test": "test"
