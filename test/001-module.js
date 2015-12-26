@@ -22,6 +22,7 @@ describe('client', function clientTest() {
     assert(expect(work).to.exist);
     assert(expect(work).to.exist);
   });
+
   it('should flow', function shouldFlow() {
     var work = new Workflow();
     assert(expect(work).to.exist);

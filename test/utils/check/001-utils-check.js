@@ -1,6 +1,6 @@
 /*jslint node: true */
 /*global module, require,describe,it*/
-'use strict';
+
 
 var Joi = require('joi');
 var mocha = require('mocha');

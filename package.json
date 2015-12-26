@@ -8,7 +8,7 @@
   },
   "scripts": {
     "doc": "jsdoc -R ./README.md -r -d ./doc/api ./lib ./index.js",
-    "test": "istanbul cover --dir ./doc/coverage _mocha -- --recursive && cat ./doc/coverage/lcov.info | ./node_modules/codecov/bin/codecov",
+    "test": "istanbul --harmony cover --dir ./doc/coverage _mocha -- --recursive && cat ./doc/coverage/lcov.info | ./node_modules/codecov/bin/codecov",
     "analyze": "plato -d ./doc/analysis -r ./lib ./index.js",
     "build": "npm run clean && npm run doc && npm run analyze && npm run test",
     "clean": "rm -rf ./doc"
@@ -47,7 +47,7 @@
     "plato": "1.5.0"
   },
   "dependencies": {
-    "joi": "^7.1.0",
+    "joi": "~6.0",
     "neo-async": "1.7.1"
   }
 }
