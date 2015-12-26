@@ -3,5 +3,5 @@
 'use strict';
 
 module.exports = {
-
+  uri: 'work.flow/test/good'
 };

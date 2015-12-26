@@ -3,7 +3,7 @@
 'use strict';
 
 /** @exports Workflow **/
-var Workflow = {
+var Work = {
   flow: require('./lib/work/flow')
 };
 /**
@@ -11,5 +11,5 @@ var Workflow = {
  * @param  {Object} options The options for this workflow
  */
 module.exports = function createWorkflow(options) {
-  return Object.create(Workflow);
+  return Object.create(Work);
 };
