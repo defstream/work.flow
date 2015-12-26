@@ -8,6 +8,8 @@ var expect = require('chai').expect;
 
 var Workflow = require('../index');
 
+var ValidationError = require('../lib/work/flow/error/validation');
+
 var Bad = require('./data/bad');
 var Good = require('./data/good');
 
@@ -59,7 +61,7 @@ describe('client', function clientTest() {
     expect(work.flow.path.definition).to.be.instanceOf(Function);
     expect(function() {
       work.flow.path.definition(Bad.path.definition);
-    }).to.throw(Error);
+    }).to.throw(ValidationError);
   });
 
 
@@ -97,7 +99,7 @@ describe('client', function clientTest() {
     expect(work.flow.task.definition).to.be.instanceOf(Function);
     expect(function() {
       work.flow.task.definition(Bad.task.definition);
-    }).to.throw(Error);
+    }).to.throw(ValidationError);
   });
 
 
@@ -126,7 +128,7 @@ describe('client', function clientTest() {
     assert(expect(work.flow.definition).to.exist);
     expect(function() {
       work.flow.definition(Bad.workflow.definition);
-    }).to.throw(Error);
+    }).to.throw(ValidationError);
   });
 
   it('should flow.run', function shouldFlowPathDefinition() {
