@@ -2,7 +2,7 @@
 /*global module, require,describe,it*/
 'use strict';
 
-var Joi = require('Joi');
+var Joi = require('joi');
 var mocha = require('mocha');
 var assert = require('assert');
 var expect = require('chai').expect;
