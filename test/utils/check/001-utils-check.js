@@ -91,6 +91,22 @@ describe('utils.check', function() {
       }).to.not.throw());
     });
 
+  it('should fail - utils.check(obj).against(schema).throwIfFailed',
+    function utilsCheck() {
+      var obj = {
+        uri: null
+      };
+      assert(expect(function() {
+        utils.check(obj).against(schema);
+      }).to.not.throw);
+      var result = utils.check(obj).against(schema);
+      assert(expect(result.throwIfFailed).to.exist);
+      assert(expect(result.using).to.exist);
+      assert(expect(function() {
+        utils.check(obj).against(schema).throwIfFailed();
+      }).to.throw());
+    });
+
 
   it('should pass - utils.check(obj).against(schema).using(callback)',
     function check(done) {

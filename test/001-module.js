@@ -44,14 +44,36 @@ describe('client', function clientTest() {
     expect(work.flow.path.definition).to.be.instanceOf(Function);
   });
 
-  it('should return flow.path.definition', function shouldFlowTaskDefinition() {
+  it('should return flow.path.definition', function shouldFlowTaskDefinition(
+    done) {
     var work = new Workflow();
     assert(expect(work).to.exist);
     assert(expect(work.flow).to.exist);
     assert(expect(work.flow.path.definition).to.exist);
     expect(work.flow.path.definition).to.be.instanceOf(Function);
-    var path = work.flow.path.definition(Good.path.definition);
-    assert(expect(path).to.exist);
+    work.flow.path.definition(Good.path.definition, function(err,
+      result) {
+      assert(expect(err).to.not.exist);
+      assert(expect(result).to.exist);
+      expect(result.uri).to.equal(Good.path.definition.uri);
+      expect(result.properties).to.equal(Good.path.definition.properties);
+      done();
+    });
+  });
+
+  it('should return failed flow.path.definition', function shouldFlowTaskDefinition(
+    done) {
+    var work = new Workflow();
+    assert(expect(work).to.exist);
+    assert(expect(work.flow).to.exist);
+    assert(expect(work.flow.path.definition).to.exist);
+    expect(work.flow.path.definition).to.be.instanceOf(Function);
+    work.flow.path.definition(Bad.path.definition, function(err,
+      result) {
+      assert(expect(err).to.exist);
+      assert(expect(result).to.not.exist);
+      done();
+    });
   });
 
   it('should fail flow.path.definition', function shouldFlowTaskDefinition() {
@@ -82,15 +104,39 @@ describe('client', function clientTest() {
   });
 
 
-  it('should return flow.task.definition', function shouldFlowTaskDefinition() {
+  it('should return flow.task.definition', function shouldFlowTaskDefinition(
+    done) {
     var work = new Workflow();
     assert(expect(work).to.exist);
     assert(expect(work.flow).to.exist);
     assert(expect(work.flow.task.definition).to.exist);
     expect(work.flow.task.definition).to.be.instanceOf(Function);
-    var task = work.flow.task.definition(Good.task.definition);
-    assert(expect(task).to.exist);
+    work.flow.task.definition(Good.task.definition, function(err,
+      result) {
+      assert(expect(err).to.not.exist);
+      assert(expect(result).to.exist);
+      expect(result.uri).to.equal(Good.task.definition.uri);
+      expect(result.properties).to.equal(Good.task.definition.properties);
+      done();
+    });
   });
+
+
+  it('should return failed flow.task.definition', function shouldFlowTaskDefinition(
+    done) {
+    var work = new Workflow();
+    assert(expect(work).to.exist);
+    assert(expect(work.flow).to.exist);
+    assert(expect(work.flow.task.definition).to.exist);
+    expect(work.flow.task.definition).to.be.instanceOf(Function);
+    work.flow.task.definition(Bad.task.definition, function(err,
+      result) {
+      assert(expect(err).to.exist);
+      assert(expect(result).to.not.exist);
+      done();
+    });
+  });
+
 
   it('should fail flow.task.definition', function shouldFlowTaskDefinition() {
     var work = new Workflow();
@@ -112,15 +158,54 @@ describe('client', function clientTest() {
     expect(work.flow.definition).to.be.instanceOf(Function);
   });
 
-  it('should return flow.definition', function shouldFlowTaskDefinition() {
+  it('should return flow.definition', function shouldFlowTaskDefinition(
+    done) {
     var work = new Workflow();
     assert(expect(work).to.exist);
     assert(expect(work.flow).to.exist);
     assert(expect(work.flow.definition).to.exist);
     expect(work.flow.definition).to.be.instanceOf(Function);
-    var flow = work.flow.definition(Good.workflow.definition);
-    assert(expect(flow).to.exist);
+    work.flow.definition(Good.workflow.definition, function(err, result) {
+      assert(expect(err).to.not.exist);
+      assert(expect(result).to.exist);
+      expect(result.uri).to.equal(Good.workflow.definition.uri);
+      expect(result.properties).to.equal(Good.workflow.definition.properties);
+      done();
+    });
+
   });
+
+  it('should return fail flow.definition', function shouldFlowTaskDefinition(
+    done) {
+    var work = new Workflow();
+    assert(expect(work).to.exist);
+    assert(expect(work.flow).to.exist);
+    assert(expect(work.flow.definition).to.exist);
+    expect(work.flow.definition).to.be.instanceOf(Function);
+    work.flow.definition(Bad.workflow.definition, function(err, result) {
+      assert(expect(err).to.exist);
+      assert(expect(result).to.not.exist);
+      done();
+    });
+  });
+
+
+  it('should return failed flow.definition x2', function shouldFlowTaskDefinition(
+    done) {
+    var work = new Workflow();
+    assert(expect(work).to.exist);
+    assert(expect(work.flow).to.exist);
+    assert(expect(work.flow.definition).to.exist);
+    expect(work.flow.definition).to.be.instanceOf(Function);
+    work.flow.definition({
+      uri: ' '
+    }, function(err, result) {
+      assert(expect(err).to.exist);
+      assert(expect(result).to.not.exist);
+      done();
+    });
+  });
+
 
   it('should fail flow.definition', function shouldFlowTaskDefinition() {
     var work = new Workflow();
@@ -132,7 +217,7 @@ describe('client', function clientTest() {
     }).to.throw(ValidationError);
   });
 
-  it('should flow.run', function shouldFlowPathDefinition() {
+  it('should flow.run', function shouldFlowPathDefinition(done) {
     var work = new Workflow();
     assert(expect(work).to.exist);
     assert(expect(work.flow).to.exist);
@@ -140,7 +225,7 @@ describe('client', function clientTest() {
     expect(work.flow.run).to.be.instanceOf(Function);
     work.flow.run(Good.workflow.run, function(err, result) {
       assert(expect(err).to.not.exist);
+      done();
     });
-
   });
 });

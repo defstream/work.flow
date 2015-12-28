@@ -30,7 +30,7 @@ describe('properties.parse', function clientTest() {
     });
   });
 
-  it('should parse', function shouldParse() {
+  it('should parse', function shouldParse(done) {
 
     var options = {
       value: {
@@ -54,10 +54,11 @@ describe('properties.parse', function clientTest() {
     parse(options, function(err, result) {
       assert(expect(err).to.not.exist);
       assert(expect(result).to.exist);
+      done();
     });
   });
 
-  it('should parse extra properties', function shouldParse() {
+  it('should parse extra properties', function shouldParse(done) {
 
     var options = {
       value: {
@@ -82,10 +83,11 @@ describe('properties.parse', function clientTest() {
     parse(options, function(err, result) {
       assert(expect(err).to.not.exist);
       assert(expect(result).to.exist);
+      done();
     });
   });
 
-  it('should parse - dynamic type', function shouldParse() {
+  it('should parse - dynamic type', function shouldParse(done) {
     var options = {
       value: {
         for: 'Bob'
@@ -108,10 +110,11 @@ describe('properties.parse', function clientTest() {
     parse(options, function(err, result) {
       assert(expect(err).to.not.exist);
       assert(expect(result).to.exist);
+      done();
     });
   });
 
-  it('should parse - no type', function shouldParse() {
+  it('should parse - no type', function shouldParse(done) {
     var options = {
       value: {
         for: 'Bob'
@@ -133,12 +136,13 @@ describe('properties.parse', function clientTest() {
     parse(options, function(err, result) {
       assert(expect(err).to.not.exist);
       assert(expect(result).to.exist);
+      done();
     });
   });
 
 
 
-  it('should parse - invalid property type', function shouldParse() {
+  it('should parse - invalid property type', function shouldParse(done) {
     var options = {
       value: {
         for: 'Bob'
@@ -158,6 +162,7 @@ describe('properties.parse', function clientTest() {
     parse(options, function(err, result) {
       assert(expect(err).to.not.exist);
       assert(expect(result).to.exist);
+      done();
     });
   });
 
@@ -189,7 +194,7 @@ describe('properties.parse', function clientTest() {
   });
 
 
-  it('should fail - readOnly', function shouldParse() {
+  it('should fail - readOnly', function shouldParse(done) {
 
     var options = {
       value: {
@@ -215,11 +220,12 @@ describe('properties.parse', function clientTest() {
       assert(expect(err).to.exist);
       expect(err).to.be.instanceOf(ValidationError);
       assert(expect(result).to.not.exist);
+      done();
     });
 
   });
 
-  it('should fail - Invalid Static Type ', function shouldInitialize() {
+  it('should fail - Invalid Static Type ', function shouldInitialize(done) {
     var options = {
       value: {
         for: 99
@@ -243,11 +249,11 @@ describe('properties.parse', function clientTest() {
       assert(expect(err).to.exist);
       expect(err).to.be.instanceOf(ValidationError);
       assert(expect(result).to.not.exist);
-
+      done();
     });
   });
 
-  it('should fail - Invalid Dynamic Type ', function shouldInitialize() {
+  it('should fail - Invalid Dynamic Type ', function shouldInitialize(done) {
     var options = {
       value: {
         for: 99
@@ -271,7 +277,7 @@ describe('properties.parse', function clientTest() {
       assert(expect(err).to.exist);
       expect(err).to.be.instanceOf(ValidationError);
       assert(expect(result).to.not.exist);
-
+      done();
     });
   });
 });

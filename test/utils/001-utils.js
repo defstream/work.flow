@@ -9,7 +9,6 @@ var expect = require('chai').expect;
 
 var utils = require('../../lib/utils');
 
-
 describe('utils', function clientTest() {
   it('should initialize', function shouldInitialize() {
     assert(expect(utils).to.exist);
