@@ -48,6 +48,9 @@
   },
   "dependencies": {
     "joi": "~6.0",
-    "neo-async": "1.7.1"
+    "mini-tokenizer": "^0.1.2",
+    "natural": "^0.2.1",
+    "neo-async": "1.7.1",
+    "varse": "^1.0.1"
   }
 }
