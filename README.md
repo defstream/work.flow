@@ -240,12 +240,10 @@ $ npm run test
 ### Discuss
 Chat channel:    <a href="https://gitter.im/defstream/work.flow"><img src="https://img.shields.io/gitter/room/defstream/work.flow.svg" alt="Chat"></a>
 
-Twitter: Follow <a href="https://twitter.com/defstream">@defstream</a>
-
 Questions or comments can also be posted on the work.flow Github issues page.
 
 ### Maintainers
-Hector Gray (Twitter: @defstream)
+Hector Gray (Twitter: <a href="https://twitter.com/defstream">@defstream</a>)
 
 ### Contribute
 Pull Requests welcome. Please make sure all tests pass:
