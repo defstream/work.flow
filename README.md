@@ -29,6 +29,10 @@
 
 **work.flow** is an asynchronous workflow library for Node.
 
+<p align="center">
+  <img src="https://raw.github.com/defstream/work.flow/master/logo.png">
+</p>
+
 The current version is 0.0.0 and is still going through documentation and testing before development starts, **Unless you are contributing, you should probably not be using this.**
 
 The purpose of work.flow is to provide a means of creating individual pieces of code that can be used to quickly create applications or data processing pipelines.
@@ -232,3 +236,25 @@ $ npm run test
 **CURRENT COVERAGE REPORT**
 
 ![codecov.io](https://codecov.io/github/defstream/work.flow/branch.svg?branch=master)
+
+### Discuss
+Chat channel:    <a href="https://gitter.im/defstream/work.flow"><img src="https://img.shields.io/gitter/room/defstream/work.flow.svg" alt="Chat"></a>
+
+Twitter: Follow <a href="https://twitter.com/defstream">@defstream</a>
+
+Questions or comments can also be posted on the work.flow Github issues page.
+
+### Maintainers
+Hector Gray (Twitter: @defstream)
+
+### Contribute
+Pull Requests welcome. Please make sure all tests pass:
+
+```shell
+$ npm test
+```
+
+Please submit Github issues for any feature enhancements, bugs or documentation problems.
+
+### License
+MIT
