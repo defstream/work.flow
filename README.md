@@ -1,6 +1,9 @@
 ## work.flow - The asynchronous workflow library for Node
 
 <p align="center">
+   <a href="http://npmjs.com/package/work.flow"><img src="https://img.shields.io/npm/v/work.flow.svg"
+        alt="npm version"></a>
+
   <a href="https://gemnasium.com/defstream/work.flow"><img src="https://img.shields.io/gemnasium/defstream/work.flow.svg"
        alt="Gemnasium"></a>
 
@@ -13,11 +16,7 @@
   <a href="https://circleci.com/gh/defstream/work.flow"><img src="https://img.shields.io/circleci/project/defstream/work.flow.svg"
        alt="coverage"></a>
 
-   <a href="http://npmjs.com/package/work.flow"><img src="https://img.shields.io/npm/v/work.flow.svg"
-        alt="npm version"></a>
-
   <a href="https://snyk.io/test/npm/work.flow"><img src="https://snyk.io/test/npm/work.flow/badge.svg" alt="Known Vulnerabilities" data-canonical-src="https://snyk.io/test/npm/name style="max-width:100%;"></a>
-
 
   <a href="http://npm-stat.com/charts.html?package=work.flow"><img src="https://img.shields.io/npm/dm/work.flow.svg" alt="downloads"></a>
 
