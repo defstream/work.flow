@@ -27,11 +27,11 @@
      alt="Chat"></a>
 </p>
 
-**work.flow** is an asynchronous workflow library for Node.
-
 <p align="center">
   <img src="https://raw.github.com/defstream/work.flow/master/logo.png">
 </p>
+
+**work.flow** is an asynchronous workflow library for Node.
 
 The current version is 0.0.0 and is still going through documentation and testing before development starts, **Unless you are contributing, you should probably not be using this.**
 
