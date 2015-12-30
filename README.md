@@ -18,6 +18,9 @@
 
   <a href="https://snyk.io/test/npm/work.flow"><img src="https://snyk.io/test/npm/work.flow/badge.svg" alt="Known Vulnerabilities" data-canonical-src="https://snyk.io/test/npm/name style="max-width:100%;"></a>
 
+
+  <a href="http://npm-stat.com/charts.html?package=work.flow">https://img.shields.io/npm/dm/work.flow.svg</a>
+
 </p>
 
 <p align="center">
