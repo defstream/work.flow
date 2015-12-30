@@ -139,7 +139,7 @@ describe('004 workflow.state', function() {
     var state = new State();
     assert(expect(state).to.exist);
     state.fail('a', function(err) {
-      assert(expect(err).to.exist.exist);
+      assert(expect(err).to.exist);
       done();
     });
   });
@@ -149,7 +149,7 @@ describe('004 workflow.state', function() {
     var state = new State();
     assert(expect(state).to.exist);
     state.start('a', function(err) {
-      assert(expect(err).to.not.exist.exist);
+      assert(expect(err).to.not.exist);
       state.awaits({
         names: ['a']
       }, function(err) {
@@ -168,7 +168,7 @@ describe('004 workflow.state', function() {
     var state = new State();
     assert(expect(state).to.exist);
     state.start('a', function(err) {
-      assert(expect(err).to.not.exist.exist);
+      assert(expect(err).to.not.exist);
       state.awaits(['a'], function(err) {
         assert(expect(err).exist);
         done();
@@ -181,7 +181,7 @@ describe('004 workflow.state', function() {
     var state = new State();
     assert(expect(state).to.exist);
     state.start('a', function(err) {
-      assert(expect(err).to.not.exist.exist);
+      assert(expect(err).to.not.exist);
       state.awaits(null, function(err) {
         assert(expect(err).exist);
         done();
@@ -206,7 +206,7 @@ describe('004 workflow.state', function() {
     var state = new State();
     assert(expect(state).to.exist);
     state.start('a', function(err) {
-      assert(expect(err).to.not.exist.exist);
+      assert(expect(err).to.not.exist);
       state.complete('a', function(err, result) {
         assert(expect(err).to.not.exist);
         state.awaits({
@@ -220,14 +220,39 @@ describe('004 workflow.state', function() {
   });
 
 
+  it('should pass - awaiting after completion', function(done) {
+    var state = new State();
+    assert(expect(state).to.exist);
+    state.start('b', function(err) {
+      assert(expect(err).to.not.exist);
+      state.start('a', function(err) {
+        state.complete('a', function(err) {
+
+          assert(expect(err).to.not.exist);
+          state.complete('b', function(err, result) {
+            assert(expect(err).to.not.exist);
+            state.awaits({
+              names: ['a', 'b']
+            }, function(err) {
+              assert(expect(err).to.not.exist);
+              done();
+            });
+          });
+        });
+      });
+
+    });
+  });
+
+
   it('should fail - await timeouts', function(done) {
     var state = new State();
     assert(expect(state).to.exist);
     state.start('b', function(err) {
-      assert(expect(err).to.not.exist.exist);
+      assert(expect(err).to.not.exist);
 
       state.start('a', function(err) {
-        assert(expect(err).to.not.exist.exist);
+        assert(expect(err).to.not.exist);
         state.awaits({
           names: ['a'],
           timeout: 500
@@ -240,6 +265,42 @@ describe('004 workflow.state', function() {
             done();
           });
         }, 1000);
+      });
+    });
+  });
+
+
+
+  it('should pass - awaiting after completion', function(done) {
+    var state = new State();
+    assert(expect(state).to.exist);
+    state.start('a', function(err) {
+      assert(expect(err).to.not.exist);
+      state.start('b', function(err) {
+        assert(expect(err).to.not.exist);
+        state.start('c', function(err) {
+          assert(expect(err).to.not.exist);
+          state.awaits({
+            names: ['a', 'b']
+          }, function(err) {
+            assert(expect(err).to.not.exist);
+            done();
+          });
+
+          state.complete('b', function(err) {
+            assert(expect(err).to.not.exist);
+            state.complete('c', function(err) {
+              assert(expect(err).to.not.exist);
+              state.complete('a', function(
+                err) {
+                assert(expect(err).to.not
+                  .exist);
+
+              });
+
+            });
+          });
+        });
       });
     });
   });
