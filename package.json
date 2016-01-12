@@ -43,14 +43,13 @@
     "codecov": "1.0.1",
     "istanbul": "0.4.1",
     "mocha": "2.3.4",
-    "neo-async": "1.7.1",
     "plato": "1.5.0",
-    "snyk": "^1.8.3"
+    "snyk": "1.8.3"
   },
   "dependencies": {
-    "joi": "~6.0",
-    "natural": "^0.2.1",
-    "neo-async": "1.7.1",
-    "varse": "^1.0.1"
+    "joi": "6.0",
+    "natural": "0.2.1",
+    "neo-async": "1.7.2",
+    "varse": "1.0.1"
   }
 }
