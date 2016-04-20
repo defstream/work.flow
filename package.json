@@ -49,7 +49,7 @@
   "dependencies": {
     "joi": "6.0",
     "natural": "0.2.1",
-    "neo-async": "1.7.2",
+    "neo-async": "1.8.1",
     "varse": "1.0.1"
   }
 }
