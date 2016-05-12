@@ -44,7 +44,7 @@
     "istanbul": "0.4.3",
     "mocha": "2.4.5",
     "plato": "1.5.0",
-    "snyk": "1.14.2"
+    "snyk": "1.14.3"
   },
   "dependencies": {
     "joi": "6.0.8",
