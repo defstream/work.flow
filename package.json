@@ -47,7 +47,7 @@
     "snyk": "1.14.2"
   },
   "dependencies": {
-    "joi": "6.0.8",
+    "joi": "8.2.0",
     "neo-async": "1.8.2",
     "varse": "1.0.1"
   }
