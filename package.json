@@ -48,7 +48,7 @@
   },
   "dependencies": {
     "joi": "6.0.8",
-    "neo-async": "1.8.2",
+    "neo-async": "2.1.0",
     "varse": "1.0.1"
   }
 }
