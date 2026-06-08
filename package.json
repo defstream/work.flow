@@ -2,16 +2,18 @@
   "name": "work.flow",
   "version": "0.0.0",
   "description": "The unreleased asynchronous workflow library for Node",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "engines": {
+    "node": ">=22"
+  },
   "directories": {
     "test": "test"
   },
   "scripts": {
-    "doc": "jsdoc -R ./README.md -r -d ./doc/api ./lib ./index.js",
-    "test": "snyk test && istanbul cover --dir ./doc/coverage _mocha -- --recursive && cat ./doc/coverage/lcov.info | ./node_modules/codecov/bin/codecov",
-    "analyze": "plato -d ./doc/analysis -r ./lib ./index.js",
-    "build": "npm run clean && npm run doc && npm run analyze && npm run test",
-    "clean": "rm -rf ./doc"
+    "build": "tsc -p tsconfig.build.json",
+    "test": "mocha",
+    "clean": "rm -rf ./dist"
   },
   "repository": {
     "type": "git",
@@ -39,16 +41,19 @@
   },
   "homepage": "https://github.com/defstream/work.flow",
   "devDependencies": {
-    "chai": "3.5.0",
-    "codecov": "1.0.1",
-    "istanbul": "0.4.3",
-    "mocha": "2.4.5",
-    "plato": "1.5.0",
-    "snyk": "1.14.2"
+    "@types/chai": "^4.3.20",
+    "@types/mocha": "^10.0.10",
+    "@types/node": "^22.0.0",
+    "chai": "^4.5.0",
+    "mocha": "^11.7.6",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.3"
   },
   "dependencies": {
-    "joi": "6.0.8",
-    "neo-async": "1.8.2",
-    "varse": "1.0.1"
+    "joi": "^18.2.1"
+  },
+  "overrides": {
+    "diff": "^8.0.3",
+    "serialize-javascript": "^7.0.5"
   }
 }

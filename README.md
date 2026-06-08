@@ -1,34 +1,13 @@
 ## work.flow - The asynchronous workflow library for Node
 
 <p align="center">
-   <a href="http://npmjs.com/package/work.flow"><img src="https://img.shields.io/npm/v/work.flow.svg"
-        alt="npm version"></a>
-
-  <a href="https://gemnasium.com/defstream/work.flow"><img src="https://img.shields.io/gemnasium/defstream/work.flow.svg"
-       alt="Gemnasium"></a>
-
-  <a href="https://travis-ci.org/defstream/work.flow"><img src="https://img.shields.io/travis/defstream/work.flow.svg"
-       alt="build status"></a>
-
-  <a href="https://codecov.io/github/defstream/work.flow"><img src="https://img.shields.io/codecov/c/github/defstream/work.flow.svg"
-        alt="coverage"></a>
-
-  <a href="https://circleci.com/gh/defstream/work.flow"><img src="https://img.shields.io/circleci/project/defstream/work.flow.svg"
-       alt="coverage"></a>
-
-  <a href="https://snyk.io/test/npm/work.flow"><img src="https://snyk.io/test/npm/work.flow/badge.svg" alt="Known Vulnerabilities"></a>
-
-  <a href="http://npm-stat.com/charts.html?package=work.flow"><img src="https://img.shields.io/npm/dm/work.flow.svg" alt="downloads"></a>
-
+  <a href="https://npmjs.com/package/work.flow"><img src="https://img.shields.io/npm/v/work.flow.svg" alt="npm version"></a>
+  <a href="https://github.com/defstream/work.flow/actions/workflows/ci.yml"><img src="https://github.com/defstream/work.flow/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
+  <a href="https://npm-stat.com/charts.html?package=work.flow"><img src="https://img.shields.io/npm/dm/work.flow.svg" alt="downloads"></a>
 </p>
 
 <p align="center">
-  <a href="https://gitter.im/defstream/work.flow"><img src="https://img.shields.io/gitter/room/defstream/work.flow.svg"
-     alt="Chat"></a>
-</p>
-
-<p align="center">
-  <img src="https://raw.github.com/defstream/work.flow/master/logo.png">
+  <img src="https://raw.github.com/defstream/work.flow/master/logo.png" alt="work.flow logo">
 </p>
 
 **work.flow** is an asynchronous workflow library for Node.
@@ -38,212 +17,251 @@ The current version is 0.0.0 and is still going through documentation and testin
 The purpose of work.flow is to provide a means of creating individual pieces of code that can be used to quickly create applications or data processing pipelines.
 
 **More Information**
-- Flow-based Programming http://www.jpaulmorrison.com/fbp/
+- Flow-based Programming https://www.jpaulmorrison.com/fbp/
 - Flow-based programming https://en.wikipedia.org/wiki/Flow-based_programming
 
 
 ### TLDR;
 
-**print-line.js**
+All `Workflow` instances share a single global definitions registry — creating `new Workflow()` in multiple files is safe, and importing a file as a side effect registers its definitions into the shared registry before `run` is called.
 
-```javascript
-var work = require('work.flow');
+**print-line.ts**
 
-module.exports = work.flow.task.definition({
-	uri: 'incredi.co/games/worlds-fastest-game/print-line',
-	properties: {
-		message: {
-			type: String,
-			value: ''
-		}
-	},
-	task: function(options, complete) {
-		var message = options.properties.message;
-		console.log(message);
-		return complete(null, message);
-	}
+```typescript
+import Workflow = require('work.flow');
+
+const work = new Workflow();
+
+work.flow.task.definition({
+  uri: 'incredi.co/games/worlds-fastest-game/print-line',
+  properties: {
+    message: { type: String, value: '' }
+  }
 });
-
 ```
 
-**ask-name.js**
+**ask-name.ts**
 
-```javascript
+```typescript
+import Workflow = require('work.flow');
 
-var util = require('util');
-var work = require('work.flow');
-var readline = require('readline');
+const work = new Workflow();
 
-var io = readline.createInterface({
-	input: process.stdin,
-	output: process.stdout
+work.flow.task.definition({
+  uri: 'incredi.co/games/worlds-fastest-game/ask-name',
+  properties: {
+    for:    { type: String, value: 'Buddy' },
+    prompt: { type: String, value: 'Hey %s, What is your name?', readOnly: true }
+  }
 });
-
-module.exports = work.flow.task.definition({
-	uri: 'incredi.co/games/worlds-fastest-game/ask-name',
-	properties: {
-		for: {
-			type: String,
-			value: 'Buddy'
-		},
-		prompt: {
-			type: String,
-			value: 'Hey %s, What is your name?',
-			readOnly: true
-		}
-	},
-	task: function(options, complete) {
-		var prompt = util.format(options.properties.prompt, options.properties.for);
-		return io.question(prompt, function(name) {
-			return complete(null, name);
-		});
-	}
-});
-
 ```
 
-**ask-for-player-names.js**
+**ask-for-player-names.ts**
 
-```javascript
-var work = require('work.flow');
+```typescript
+import Workflow = require('work.flow');
+import './ask-name';
 
-require('./ask-name');
+const work = new Workflow();
 
-module.exports = work.flow.path.definition({
-	uri: 'incredi.co/games/worlds-fastest-game/paths/ask-for-player-names',
-	start: [{
-		name: 'player-one',
-		uri: 'incredi.co/games/worlds-fastest-game/ask-name',
-		properties: {
-			for: 'Player 1'
-		}
-	}, {
-		name: 'player-two',
-		uri: 'incredi.co/games/worlds-fastest-game/ask-name',
-		properties: {
-			for: 'Player 2'
-		}
-	}],
-	timeout: 6000,
-	error: [{
-		uri: 'work.flow/task/restart'
-	}]
+work.flow.path.definition({
+  uri: 'incredi.co/games/worlds-fastest-game/paths/ask-for-player-names',
+  start: [
+    { name: 'player-one', uri: 'incredi.co/games/worlds-fastest-game/ask-name', properties: { for: 'Player 1' } },
+    { name: 'player-two', uri: 'incredi.co/games/worlds-fastest-game/ask-name', properties: { for: 'Player 2' } }
+  ],
+  timeout: 6000,
+  error: [{ uri: 'work.flow/task/restart' }]
 });
-
 ```
 
-**workflow.js**
+**workflow.ts**
 
-```javascript
-var work = require('work.flow');
+```typescript
+import Workflow = require('work.flow');
+import './print-line';
+import './ask-for-player-names';
 
-require('./print-line');
-require('./ask-for-player-names');
+const work = new Workflow();
 
-module.exports = work.flow.definition({
-	name: 'worlds-fastest-game',
-	uri: 'incredi.co/games/worlds-fastest-game',
-	start: [{
-		name: 'ask-names',
-		uri: 'incredi.co/games/worlds-fastest-game/paths/ask-for-player-names'
-	}, {
-		name: 'determine-winner',
-		uri: 'work.flow/task/if-then-else',
-		properties: {
-			if: {
-				value: function(options, callback) {
-          //@info return a random number between 1 & 2.
-					return callback(null, Math.round(Math.random() * (2 - 1) + 1));
-				},
-				equals: 1,
-				then: [{
-					name: 'player-one-wins',
-					uri: 'incredi.co/games/worlds-fastest-game/print-line',
-					properties: {
-						message: '{ask-names.player-one} WINS!!!!'
-					}
-				}],
-				else: [{
-					name: 'player-two-wins',
-					uri: 'incredi.co/games/worlds-fastest-game/print-line',
-					properties: {
-						message: '{ask-names.player-two} WINS!!!!'
-					}
-				}]
-			}
-		}
-	}, {
-		uri: 'work.flow/workflow/restart'
-	}],
-	timeout: 6000,
-	error: [{
-		uri: 'work.flow/workflow/restart'
-	}]
+work.flow.definition({
+  name: 'worlds-fastest-game',
+  uri: 'incredi.co/games/worlds-fastest-game',
+  start: [
+    { name: 'ask-names', uri: 'incredi.co/games/worlds-fastest-game/paths/ask-for-player-names' },
+    {
+      name: 'determine-winner',
+      uri: 'work.flow/task/if-then-else',
+      properties: {
+        if: {
+          equals: 1,
+          then: [{ name: 'player-one-wins', uri: 'incredi.co/games/worlds-fastest-game/print-line', properties: { message: '{ask-names.player-one} WINS!!!!' } }],
+          else: [{ name: 'player-two-wins', uri: 'incredi.co/games/worlds-fastest-game/print-line', properties: { message: '{ask-names.player-two} WINS!!!!' } }]
+        }
+      }
+    },
+    { uri: 'work.flow/workflow/restart' }
+  ],
+  timeout: 6000,
+  error: [{ uri: 'work.flow/workflow/restart' }]
 });
-
 ```
 
-**index.js**
+**index.ts**
 
-```javascript
-var workflow = require('./workflow');
+```typescript
+import Workflow = require('work.flow');
+import './workflow'; // registers all definitions as a side effect
 
-//@info lets run the worlds fastest game
-workflow.run(function(err, context){
-  //@info The worlds fastest game is also the longest
-  //      If you take a close look at the work flow
-  //      It will never actually end...
+const work = new Workflow();
+
+work.flow.run({}, (err: Error | null) => {
   console.log('MUAHAHAHAHAHAHAHAH');
 });
-
-
 ```
 
 # Installation
 
 ```shell
-$ npm install work.flow --save
+npm install work.flow
 ```
+
+# API Reference
+
+### `new Workflow()`
+
+Returns a `Workflow` instance. All instances share the same global definitions registry.
+
+```typescript
+import Workflow = require('work.flow');
+const work = new Workflow();
+```
+
+---
+
+### `work.flow.task.definition(def, callback?)`
+
+Registers a task definition in the global registry.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `uri` | `string` | yes | Unique identifier for the task |
+| `name` | `string` | no | Human-readable name |
+| `properties` | `object` | no | Input property descriptors |
+| `error` | `array` | no | Error handler URIs |
+| `timeout` | `number` | no | Timeout in milliseconds |
+
+---
+
+### `work.flow.path.definition(def, callback?)`
+
+Registers a path definition. Paths group tasks that run in parallel.
+
+Same fields as `task.definition`, plus:
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `start` | `object[]` | no | Tasks/paths to run at path start |
+
+---
+
+### `work.flow.definition(def, callback?)`
+
+Registers a workflow definition.
+
+Same fields as `path.definition`.
+
+---
+
+### `work.flow.definitions`
+
+The global definitions registry. Methods:
+
+```typescript
+work.flow.definitions.addTask(def, callback?)
+work.flow.definitions.addPath(def, callback?)
+work.flow.definitions.addWorkflow(def, callback?)
+work.flow.definitions.get(uri)     // → definition | undefined
+work.flow.definitions.exists(uri)  // → boolean
+work.flow.definitions.valid(def)   // → boolean
+```
+
+---
+
+### `work.flow.run(options, callback?)`
+
+Initiates a workflow run. Calls `callback(null)` on success.
+
+---
+
+### `WorkflowState`
+
+Tracks execution state for named steps within a run. Each step must be started before it can be completed or failed.
+
+```typescript
+import WorkflowState = require('work.flow/lib/work/flow/state');
+
+const state = new WorkflowState();
+
+state.start('step-a', (err) => { /* started */ });
+state.complete('step-a', (err) => { /* completed */ });
+state.fail('step-a', (err) => { /* marked as failed */ });
+
+// Wait for one or more steps to complete (supports optional timeout)
+state.awaits({ names: ['step-a', 'step-b'], timeout: 5000 }, (err) => {
+  // err is TimeoutError if timeout expires before all names complete
+});
+```
+
+---
+
+### Error Classes
+
+| Class | Code | Import |
+|---|---|---|
+| `ValidationError` | 400 | `work.flow/lib/work/flow/error/validation` |
+| `NotFoundError` | 404 | `work.flow/lib/work/flow/error/not-found` |
+| `TimeoutError` | 408 | `work.flow/lib/work/flow/error/timeout` |
+| `ExecutionError` | 500 | `work.flow/lib/work/flow/error/execution` |
+
+All error classes extend `Error` and accept an optional `message` and `details` argument.
+
+---
 
 # Development Scripts
-Before running any development scripts, be sure to first install the dev modules.
+
+Install dependencies first:
 
 ```shell
-$ npm install work.flow --save --dev
+npm install
 ```
 
-#### Build Documentation
-Outputs code documentation files to the `./doc/api` folder.
+#### Test
 
 ```shell
-$ npm run doc
+npm test
 ```
 
-#### Static Analysis
-Outputs static analysis files to the `./doc/analysis` folder.
+#### Build
+
+Compiles TypeScript to `./dist` with declaration files and source maps.
 
 ```shell
-$ npm run analyze
+npm run build
 ```
 
-#### Test + Coverage
-Outputs code coverage files to the `./doc/coverage` folder.
+#### Clean
 
 ```shell
-$ npm run test
+npm run clean
 ```
-
-**CURRENT COVERAGE REPORT**
-
-![codecov.io](https://codecov.io/github/defstream/work.flow/branch.svg?branch=master)
 
 ### Discuss
-Chat channel:    <a href="https://gitter.im/defstream/work.flow"><img src="https://img.shields.io/gitter/room/defstream/work.flow.svg" alt="Chat"></a>
 
-Questions or comments can also be posted on the work.flow Github issues page.
+Questions or comments can be posted on the <a href="https://github.com/defstream/work.flow/issues">work.flow GitHub issues page</a>.
 
 ### Maintainers
-Hector Gray (Twitter: <a href="https://twitter.com/defstream">@defstream</a>)
+Hector Gray (<a href="https://x.com/defstream">@defstream</a>)
 
 ### Contribute
 Pull Requests welcome. Please make sure all tests pass:
@@ -252,7 +270,7 @@ Pull Requests welcome. Please make sure all tests pass:
 $ npm test
 ```
 
-Please submit <a href="https://github.com/defstream/work.flow/issues">Github issues</a> for any feature enhancements, bugs or documentation problems.
+Please submit <a href="https://github.com/defstream/work.flow/issues">GitHub issues</a> for any feature enhancements, bugs or documentation problems.
 
 ### License
 MIT
